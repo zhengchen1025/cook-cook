@@ -1,7 +1,20 @@
 # cook-cook
 
-简短一句话描述  
-一个用于记录厨艺与烘焙尝试的轻量化单页面应用（SPA）。当前处于后端原型阶段，使用 Node.js + Express 提供基础 API，后续将开发 React 前端与数据库持久化。
+这是一个用于记录菜谱（recipes）与多次尝试（attempts）的最小 Express 后端示例，使用内存存储（非持久化）。适合本地开发与快速原型。
+
+## 主要特性
+
+- Health check: `GET /api/health`
+- 简单的 CRUD for recipes:
+  - `POST /api/recipes` — 创建 recipe（必填 `title`）
+  - `GET /api/recipes` — 列表（支持 `?q=` 搜索）
+  - `GET /api/recipes/:id` — 获取单条
+  - `PUT /api/recipes/:id` — 更新（局部）
+  - `DELETE /api/recipes/:id` — 删除
+- Attempts（每次烹饪的记录）：
+  - `POST /api/recipes/:id/attempts` — 为指定 recipe 添加 attempt（必填 `body`）
+  - `GET /api/recipes/:id/attempts` — 列出 attempts（最新优先）
+- 简单日志中间件，会在控制台输出每次请求
 
 ## 当前状态
 - 已初始化项目并运行 Express 开发服务器（Node + Express + nodemon）。
