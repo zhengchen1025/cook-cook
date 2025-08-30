@@ -14,7 +14,19 @@ const rateLimit = require("express-rate-limit");
 const prisma = new PrismaClient();
 
 app.use(express.json());
-app.use(cors());
+// If running behind a proxy (like Render), trust the proxy so Express can
+// correctly detect secure connections and allow secure cookies.
+app.set("trust proxy", 1);
+
+// Allow the frontend to send credentials (cookies). In production set
+// FRONTEND_ORIGIN to your frontend origin (e.g. https://your-app.com).
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || true;
+app.use(
+  cors({
+    origin: FRONTEND_ORIGIN,
+    credentials: true,
+  })
+);
 
 // Rate limiters
 const authLimiter = rateLimit({
@@ -44,12 +56,16 @@ const writeLimiter = rateLimit({
 
 // sessions
 const SESSION_SECRET = process.env.SESSION_SECRET || "dev-only-session-secret";
+const isProd = process.env.NODE_ENV === "production";
 app.use(
   session({
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
       sameSite: "lax",
+      // In production, require secure cookies (HTTPS). "trust proxy" must be set
+      // so that Express knows the request is secure behind a proxy.
+      secure: isProd,
     },
     secret: SESSION_SECRET,
     resave: false,
@@ -60,6 +76,12 @@ app.use(
     }),
   })
 );
+
+if (!isProd) {
+  console.log(
+    "Session cookie secure=false (development). Set NODE_ENV=production on Render for secure cookies."
+  );
+}
 
 // helpers
 const {

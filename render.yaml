@@ -11,3 +11,6 @@ services:
         sync: false
       - key: NODE_ENV
         value: production
+      - key: FRONTEND_ORIGIN
+        # Set this to your frontend origin (e.g. https://my-app.onrender.com)
+        sync: false
