@@ -1,0 +1,52 @@
+.
+├── frontend
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   └── vite.svg
+│   ├── README.md
+│   ├── src
+│   │   ├── AddAttemptForm.jsx
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── assets
+│   │   │   └── react.svg
+│   │   ├── CreateRecipeForm.jsx
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   ├── RecipeCard.jsx
+│   │   ├── RecipeList.jsx
+│   │   └── utils
+│   │       └── helpers.js
+│   └── vite.config.js
+├── package-lock.json
+├── package.json
+├── prisma
+│   ├── dev.db
+│   ├── migrations
+│   │   ├── 20250826031503_init
+│   │   │   └── migration.sql
+│   │   └── migration_lock.toml
+│   └── schema.prisma
+├── project_structure.txt
+├── public
+│   └── uploads
+│       ├── 1756107956024_622562.webp
+│       ├── 1756109015667_732667.webp
+│       ├── 1756110550194_727253.webp
+│       ├── 1756110577503_86871.webp
+│       ├── 1756110646590_998790.webp
+│       ├── 1756110715867_587559.webp
+│       └── 1756262693940_291566.webp
+├── README.md
+├── src
+│   ├── index.js
+│   ├── uploads.js
+│   └── utils
+│       └── validate.js
+└── test
+    └── recipes.test.js
+
+14 directories, 36 files
