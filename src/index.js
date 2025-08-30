@@ -1,6 +1,7 @@
 // src/index.js
 const express = require("express");
 const app = express();
+
 const PORT = process.env.PORT || 4000;
 const cors = require("cors");
 const path = require("path");
@@ -1058,7 +1059,11 @@ app.get("/api/ping", (req, res) => {
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 // For all routes that are not API routes, serve the frontend app
-app.get("/*", (req, res) => {
+// Use '*' instead of '/*' because newer path-to-regexp versions treat '*' as a
+// wildcard token that must be followed by a name, which breaks patterns like '/*'.
+// Match any path that does not start with /api to serve the frontend SPA.
+// Use a regex here to avoid path-to-regexp interpreting special tokens.
+app.get(/^((?!\/api).)*$/, (req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
 
