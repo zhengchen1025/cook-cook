@@ -62,7 +62,10 @@ app.use(
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
-      sameSite: "lax",
+      // For cross-origin fetch requests (frontend on a different origin), browsers
+      // require SameSite=None and Secure=true. In development we keep lax to
+      // allow local testing without HTTPS.
+      sameSite: isProd ? "none" : "lax",
       // In production, require secure cookies (HTTPS). "trust proxy" must be set
       // so that Express knows the request is secure behind a proxy.
       secure: isProd,

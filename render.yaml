@@ -13,4 +13,8 @@ services:
         value: production
       - key: FRONTEND_ORIGIN
         # Set this to your frontend origin (e.g. https://my-app.onrender.com)
+        # If you deploy frontend separately, set this to its origin so the
+        # backend will allow cross-site credentials. Example below — replace
+        # with your real frontend URL before deploying.
+        value: https://your-frontend.onrender.com
         sync: false
