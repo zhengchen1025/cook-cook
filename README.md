@@ -33,26 +33,40 @@ BetterCook 的目标是帮助记录并改进烹饪与烘焙实践。核心想法
 - 列表与详情页：按类别/关键词搜索，查看菜谱历史实践记录
 - 简易统计（后期）：成功率、平均评分、常见调整词频等
 
-## 技术栈（计划）
+## 技术栈
 - 后端：Node.js + Express  
-- 数据库（开发）：SQLite（轻量、免配置）→ 部署时可换 PostgreSQL（Supabase / Railway）  
-- ORM：Prisma（可选，推荐）  
+- 数据库：SQLite + Prisma ORM（开发）→ 部署时可换 PostgreSQL（Supabase / Railway/Render）  
 - 前端：React + Tailwind CSS（SPA），使用 Fetch 或 Axios 与后端交互  
-- 部署：前端 Vercel/Netlify，后端 Railway/Render/Heroku（任选）
+- 部署：前端 Vercel/Netlify，后端 Render.com
 
 ## 本地运行（开发环境）
+
 1. 克隆仓库并进入目录：  
    - `git clone <仓库地址>`  
    - `cd cook-cook`
-2. 安装依赖：  
+
+2. 安装后端依赖：  
    - `npm install`
-3. 启动开发服务器（带自动重启）：  
+
+3. 安装前端依赖:
+   - `cd frontend && npm install && cd ..`
+
+4. 创建 .env 文件并设置环境变量：
+   ```
+   SESSION_SECRET=your-generated-secret-here
+   DATABASE_URL=file:./dev.db
+   PORT=4000
+   ```
+
+5. 运行数据库迁移：
+   - `npx prisma migrate dev`
+
+6. 启动开发服务器（带自动重启）：  
    - `npm run dev`
-4. 访问：  
+
+7. 访问：  
    - 浏览器： `http://localhost:4000`  
    - 测试 API： `http://localhost:4000/api/ping`
-
-（如果后续引入数据库和环境变量，会在此处补充 `.env` 配置说明）
 
 ## Day 1（已完成）
 - 初始化仓库与项目结构（Node + Express）。
@@ -63,7 +77,7 @@ BetterCook 的目标是帮助记录并改进烹饪与烘焙实践。核心想法
 ### 短期目标（接下来 1–2 天）
 - 在后端加入 JSON body 解析中间件（`express.json()`）。  
 - 实现基础用户注册与登录路由（占位实现，后续接数据库与 bcrypt/JWT）。  
-- 初始化 Prisma + SQLite（或选择 PostgreSQL），设计初步 schema（users, recipes, attempts）。  
+- 初始化 Prisma + SQLite，设计初步 schema（users, recipes, attempts）。  
 - 在 README 中记录开发步骤与学习笔记。
 
 ### 中期目标（1–2 周）
@@ -72,13 +86,36 @@ BetterCook 的目标是帮助记录并改进烹饪与烘焙实践。核心想法
 - 部署前后端并进行端到端测试。
 
 ## 常见命令
-- 安装依赖： `npm install`  
-- 启动开发服务器： `npm run dev`  
-- 生产启动： `npm start`  
+- 安装依赖： `npm install`
+- 启动开发服务器： `npm run dev`
+- 生产启动： `npm start`
+- 构建前端并部署： `npm run build`
+- 数据库迁移： `npx prisma migrate dev`
 - 查看可用脚本： `npm run`
 
 ## 贡献与反馈
 这是个人学习与实践项目，欢迎提出建议或打开 issue。若你想贡献代码，请先在 issue 里描述想实现的功能，再创建分支提交 PR。
+## 部署到 Render.com
+
+1. 将代码推送到 GitHub 仓库
+
+2. 登录 Render.com 并连接你的 GitHub 账户
+
+3. 创建一个新的 Web Service：
+   - 选择你的仓库
+   - 设置以下环境变量：
+     - `SESSION_SECRET` - 一个安全的随机字符串（至少32字符）
+     - `DATABASE_URL` - `file:./prod.db` 或使用 Render 的 PostgreSQL 服务
+   - Render 会自动检测并运行构建和启动命令
+
+4. 部署完成后，你的应用将可以通过 Render 提供的 URL 访问
+
+## 项目结构
+
+- `/src` - 后端源代码
+- `/frontend` - 前端源代码 (React)
+- `/prisma` - Prisma schema 和迁移文件
+- `/public` - 静态文件目录（构建后的前端文件将存放在这里）
 
 ## 作者
 - zhengchen1025 (GitHub)

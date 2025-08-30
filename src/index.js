@@ -1057,7 +1057,8 @@ app.get("/api/ping", (req, res) => {
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, "..", "public")));
 
-app.get("/", (req, res) => {
+// For all routes that are not API routes, serve the frontend app
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
 
